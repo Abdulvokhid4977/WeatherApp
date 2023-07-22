@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocProvider(
       create: (context) => HomeCubit()..getWeatherData(),
       child: BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) {
+        builder: (cubitCTX, state) {
           if (state is HomeLoading) {
             debugPrint('HomeLoading state');
             return const Scaffold(
@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           else if (state is HomeLoaded) {
             debugPrint('HomeLoaded state');
-            debugPrint(state.weatherModel.location.region);
             return Container(
               decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -50,8 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed(
-                              SearchScreen.routeName);
+                          BlocProvider.of<HomeCubit>(cubitCTX).searchbar();
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -121,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 SizedBoxClass.height20,
                                 Text(
-                                  '${state.weatherModel.current.tempC}°',
+                                  '${state.weatherModel.current.tempC.floor()}°',
                                   style: textSt(65, 20, -2.0, 5.0),
                                 ),
                                 SizedBoxClass.height25,
@@ -180,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       SizedBoxClass.width20,
                                       Text(
-                                        '54%',
+                                        '${state.weatherModel.current.humidity}%',
                                         style: textSt(18, 7, -2.5, 2.0),
                                       ),
                                       SizedBoxClass.width30,
@@ -237,7 +235,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
-          else {
+          else if(state is HomeSearch){
+            debugPrint('HomeSearch state');
+            return const SearchScreen();
+          }
+          else{
             return const SizedBox();
           }
         },

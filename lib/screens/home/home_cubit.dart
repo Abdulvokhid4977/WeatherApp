@@ -18,5 +18,8 @@ Future<void> getWeatherData() async{
     emit(HomeLoaded(weatherMod));
   }
   }
+  void searchbar(){
+  emit(HomeSearch());
+  }
 }
 

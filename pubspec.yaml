@@ -42,7 +42,7 @@ dependencies:
   flutter_screenutil:
   intl:
   location:
-  google_maps_flutter:
+  yandex_mapkit:
 
 dev_dependencies:
   flutter_test:

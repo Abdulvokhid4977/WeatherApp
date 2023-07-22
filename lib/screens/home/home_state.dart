@@ -12,7 +12,6 @@ class HomeLoaded extends HomeState {
   HomeLoaded(this.weatherModel);
 }
 class HomeSearch extends HomeState{
-
 }
 class ErrorState extends HomeState{
 final String errorText;
