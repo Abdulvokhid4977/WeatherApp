@@ -28,9 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is HomeLoading) {
             debugPrint('HomeLoading state');
             return const Scaffold(
-              body: Center(child: CircularProgressIndicator(),),);
-          }
-          else if (state is HomeLoaded) {
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state is HomeLoaded) {
             debugPrint('HomeLoaded state');
             return Container(
               decoration: const BoxDecoration(
@@ -38,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                       colors: [
-                        Color.fromRGBO(71, 191, 223, 1),
-                        Color.fromRGBO(74, 145, 255, 1)
-                      ])),
+                    Color.fromRGBO(71, 191, 223, 1),
+                    Color.fromRGBO(74, 145, 255, 1)
+                  ])),
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(
@@ -90,8 +92,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: SizedBox(
                         height: 200.h,
                         width: double.infinity,
-                        child: SvgPicture.asset('assets/cloudy.svg', fit: BoxFit
-                            .contain,),
+                        child: SvgPicture.asset(
+                          'assets/${state.weatherModel.current.condition.text == 'Sunny' ? 'weather-clear.svg' : 'cloudy.svg'}',
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                     SizedBoxClass.height10,
@@ -113,8 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 SizedBoxClass.height20,
                                 Text(
-                                  'Today, ${DateFormat.MMMMd().format(
-                                      DateTime.now())}',
+                                  'Today, ${DateFormat.MMMMd().format(DateTime.now())}',
                                   style: textSt(18, 5, 2.5, 2.0),
                                 ),
                                 SizedBoxClass.height20,
@@ -201,21 +204,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       ]),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(13.0),
                             ),
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushNamed(
-                              DetailsScreen.routeName);
+                          Navigator.of(context)
+                              .pushNamed(DetailsScreen.routeName);
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-
                             const Text(
                               'Forecast Report',
                               style: TextStyle(color: Colors.black87),
@@ -234,26 +236,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             );
-          }
-          else if(state is HomeSearch){
+          } else if (state is HomeSearch) {
             debugPrint('HomeSearch state');
             return const SearchScreen();
-          }
-          else{
+          } else {
             return const SizedBox();
           }
         },
       ),
     );
   }
-  void modalBottomSheet(BuildContext context){
-    showModalBottomSheet(context: context, builder: (context){
-      return const Notifications();
-    });
+
+  void modalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return const Notifications();
+        });
   }
 
-  TextStyle textSt(double fontSize, double blurRadius, double offset1,
-      double offset2) {
+  TextStyle textSt(
+      double fontSize, double blurRadius, double offset1, double offset2) {
     return TextStyle(fontSize: fontSize.sp, shadows: [
       Shadow(
           blurRadius: blurRadius,
